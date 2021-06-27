@@ -41,6 +41,10 @@ def worker_loop(pusher_port, pid, server_status):
                 response = worker.process_data(metrics)
                 print(response)
                 # process dataframe 
+                # ....
+                # ....
+                # ....
+                
             except zmq.ZMQError as e: 
                 pass 
     except KeyboardInterrupt as e:    
