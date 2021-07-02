@@ -1,9 +1,16 @@
 import zmq 
+import cv2 
 import pickle 
 
 from os import path 
 from glob import glob 
 from collections import Counter 
+
+def create_screen(name, W, H, position=None):
+    cv2.namedWindow(name, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(name, W, H)
+    if position is not None:
+        cv2.moveWindow(name, *position)
 
 class ZMQServer:
     def __init__(self, pusher_port, source_data):
@@ -51,14 +58,13 @@ class ZMQWorker:
         self.ctx.term()
     
     def process_data(self, metrics): 
-        print(metrics) 
         acc = []
         for key, val in metrics.items():
             cnt = Counter()
             iterable = list(val.values())
             cnt.update( iterable )
             acc.append((key, dict(cnt)))
-        return acc 
+        return dict(acc) 
 
 
 
